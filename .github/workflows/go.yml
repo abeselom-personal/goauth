@@ -19,14 +19,14 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.24'    # Specify your Go version
+          go-version: '1.24'    # Specify the correct Go version
 
       - name: Install golangci-lint
         run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.64.5
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
-      - name: Cache Go modules1.20
+      - name: Cache Go modules
         uses: actions/cache@v2
         with:
           path: ~/go/pkg/mod
@@ -40,10 +40,10 @@ jobs:
       - name: Run linters
         run: |
           gofmt -l -w .
-          golangci-lint run
+          golangci-lint run --timeout 5m  # Add timeout for linting
 
       - name: Run tests
-        run: go test ./...
+        run: go test -v ./...
 
       - name: Build
         run: go build -v ./...
