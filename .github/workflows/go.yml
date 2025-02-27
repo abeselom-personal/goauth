@@ -19,9 +19,9 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.20'    # Specify your Go version
+          go-version: '1.24'    # Specify your Go version
 
-      - name: Cache Go modules
+      - name: Cache Go modules1.20
         uses: actions/cache@v2
         with:
           path: ~/go/pkg/mod
